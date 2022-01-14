@@ -36,6 +36,7 @@ import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
 import org.springframework.samples.petclinic.owner.Owner;
+import org.springframework.samples.petclinic.vacination.Vaccination;
 
 /**
  * Simple business object representing a pet.
@@ -59,6 +60,10 @@ public class Pet extends NamedEntity {
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
+
+	@OneToMany(cascade=CascadeType.ALL,mappedBy = "vaccinatedPet")
+	private List<Vaccination> vaccination;
+
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
@@ -109,4 +114,11 @@ public class Pet extends NamedEntity {
 		visit.setPet(this);
 	}
 
+	public List<Vaccination> getVaccination() {
+		return vaccination;
+	}
+
+	public void setVaccination(List<Vaccination> vaccination) {
+		this.vaccination = vaccination;
+	}
 }
