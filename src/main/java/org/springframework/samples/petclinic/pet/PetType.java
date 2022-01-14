@@ -15,16 +15,28 @@
  */
 package org.springframework.samples.petclinic.pet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.samples.petclinic.model.NamedEntity;
+import org.springframework.samples.petclinic.vacination.Vaccine;
+
+import java.util.List;
 
 /**
  * @author Juergen Hoeller Can be Cat, Dog, Hamster...
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "types")
 public class PetType extends NamedEntity {
+
+    @OneToMany(cascade= CascadeType.ALL,mappedBy = "petType")
+    public List<Vaccine> vaccineList;
 
 }
